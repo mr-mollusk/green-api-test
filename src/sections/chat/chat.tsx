@@ -11,9 +11,6 @@ export const Chat: FC<IChat> = observer(() => {
   const { chatId } = useStore((store) => store.chatStore);
   const [message, setMessage] = useState("");
   const [messagesList, setMessagesList] = useState<IMessage[]>([]);
-  // const getMessages = useStore((store) =>
-  //   store.chatStore.getMessages.bind(store.chatStore)
-  // );
   const getMessages = async () => {
     if (chatId) {
       const data = await chatAPI.getMessages(chatId, 1000);
@@ -24,10 +21,12 @@ export const Chat: FC<IChat> = observer(() => {
     if (chatId) {
       const data = await chatAPI.receiveNotification();
 
-      const result = await chatAPI.deleteNotification(data.receiptId);
+      if (data) {
+        const result = await chatAPI.deleteNotification(data.receiptId);
 
-      if (result) {
-        getMessages();
+        if (result) {
+          getMessages();
+        }
       }
     }
   };
@@ -35,14 +34,18 @@ export const Chat: FC<IChat> = observer(() => {
     getMessages();
   }, [chatId]);
   useEffect(() => {
-    getNotification();
-  }, []);
+    setInterval(getNotification, 5000);
+  }, [chatId]);
 
   const handleSendMessage = () => {
     if (chatId) {
       chatAPI.sendMessage(chatId, message);
       setMessagesList([
-        { textMessage: message, type: "outgoing" },
+        {
+          textMessage: message,
+          type: "outgoing",
+          idMessage: `newMessage${new Date()}`,
+        },
         ...messagesList,
       ]);
       setMessage("");
@@ -52,11 +55,21 @@ export const Chat: FC<IChat> = observer(() => {
   return (
     <div className={s.wrapper}>
       <div className={s.content}>
-        {messagesList.map((message) => (
-          <div className={clsx({ [s.myMessage]: message.type === "outgoing" })}>
-            {message.textMessage}
-          </div>
-        ))}
+        {messagesList.map((message) => {
+          let time = new Date();
+          if (message.timestamp) time = new Date(message.timestamp * 1000);
+          return (
+            <div
+              key={message.idMessage}
+              className={clsx(s.message, {
+                [s.myMessage]: message.type === "outgoing",
+              })}
+            >
+              <div>{message.textMessage}</div>
+              <div>{time.toTimeString().slice(0, 5)}</div>
+            </div>
+          );
+        })}
       </div>
       <div className={s.input}>
         <textarea
