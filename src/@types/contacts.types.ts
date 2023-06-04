@@ -3,3 +3,6 @@ export interface IContact {
   avatar: string;
   chatId: string;
 }
+export interface ISettings {
+  wid: string;
+}
