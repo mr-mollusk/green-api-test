@@ -35,6 +35,8 @@ export class ContactsStore {
   }
 
   async getNewContactByPhoneNumber(phoneNumber: string) {
+    if (phoneNumber[0] === "8") phoneNumber = "7" + phoneNumber.slice(1);
+    if (phoneNumber[0] === "+") phoneNumber = phoneNumber.slice(1);
     const data = await contactsAPI.getChatInfoById(phoneNumber);
     const contacts = localStorage.getItem("contacts");
     if (contacts) {
