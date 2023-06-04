@@ -23,12 +23,13 @@ export const ChatList: FC<IChatList> = observer(() => {
 
   const handleAddChat = () => {
     addChat(phoneNumber);
+    setPhoneNumber("");
   };
 
   useEffect(() => {
     setContacts([]);
     setContacts(getContactsFromLS());
-  }, []);
+  }, [phoneNumber]);
   return (
     <div className={s.wrapper}>
       <div className={s.header}>

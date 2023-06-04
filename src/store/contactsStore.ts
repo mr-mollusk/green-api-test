@@ -46,7 +46,6 @@ export class ContactsStore {
         avatar: data.avatar,
         chatId: data.chatId,
       });
-      console.log(contactsArray);
 
       this.contacts = [...contactsArray];
       localStorage.setItem("contacts", JSON.stringify(this.contacts));
