@@ -55,29 +55,32 @@ export const Chat: FC<IChat> = observer(() => {
   return (
     <div className={s.wrapper}>
       <div className={s.content}>
-        {messagesList.map((message) => {
-          let time = new Date();
-          if (message.timestamp) time = new Date(message.timestamp * 1000);
-          return (
-            <div
-              key={message.idMessage}
-              className={clsx(s.message, {
-                [s.myMessage]: message.type === "outgoing",
-              })}
-            >
-              <div>{message.textMessage}</div>
-              <div>{time.toTimeString().slice(0, 5)}</div>
-            </div>
-          );
-        })}
+        {chatId &&
+          messagesList.map((message) => {
+            let time = new Date();
+            if (message.timestamp) time = new Date(message.timestamp * 1000);
+            return (
+              <div
+                key={message.idMessage}
+                className={clsx(s.message, {
+                  [s.myMessage]: message.type === "outgoing",
+                })}
+              >
+                <div>{message.textMessage}</div>
+                <div>{time.toTimeString().slice(0, 5)}</div>
+              </div>
+            );
+          })}
       </div>
-      <div className={s.input}>
-        <textarea
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-        <button onClick={handleSendMessage}>Отправить</button>
-      </div>
+      {chatId && (
+        <div className={s.input}>
+          <textarea
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+          <button onClick={handleSendMessage}>Отправить</button>
+        </div>
+      )}
     </div>
   );
 });

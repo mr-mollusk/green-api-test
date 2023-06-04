@@ -27,6 +27,12 @@ export const ChatList: FC<IChatList> = observer(() => {
   };
 
   useEffect(() => {
+    const data = localStorage.getItem("contacts");
+    if (data === "[]") {
+      localStorage.setItem("contacts", JSON.stringify([]));
+    }
+  }, []);
+  useEffect(() => {
     setContacts([]);
     setContacts(getContactsFromLS());
   }, [phoneNumber]);

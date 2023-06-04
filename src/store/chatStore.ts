@@ -10,6 +10,7 @@ export class ChatStore {
   }
   setChatId(chatId: string) {
     this.chatId = chatId;
+    console.log(chatId);
   }
   async getMessages() {
     const data = await chatAPI.getMessages(this.chatId, 10);
