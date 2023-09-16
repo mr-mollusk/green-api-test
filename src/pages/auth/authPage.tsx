@@ -15,7 +15,7 @@ export const AuthPage = () => {
   return (
     <div className={s.wrapper}>
       <div className={s.authForm}>
-        <h2>Авторизируйтесь, используя данные из Green Api Cabinet</h2>
+        <h2>Авторизируйтесь</h2>
         <div className={s.input}>
           <label htmlFor="idInstance">idInstance</label>
           <input
