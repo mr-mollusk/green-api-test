@@ -9,7 +9,7 @@ export const AuthPage = () => {
   const handleAuth = () => {
     localStorage.setItem("idInstance", idInstance);
     localStorage.setItem("apiTokenInstance", apiTokenInstance);
-    navigate('/chat')
+    navigate("/chat");
   };
 
   return (
@@ -17,7 +17,9 @@ export const AuthPage = () => {
       <div className={s.authForm}>
         <h2>Авторизируйтесь</h2>
         <div className={s.input}>
-          <label htmlFor="idInstance">idInstance</label>
+          <label htmlFor="idInstance">
+            idInstance, да херня твой idInstance
+          </label>
           <input
             id="idInstance"
             value={idInstance}
